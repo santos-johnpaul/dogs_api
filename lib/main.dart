@@ -51,3 +51,40 @@ class _DogImagesPageState extends State<DogImagesPage> {
       throw Exception('Failed to load dog images');
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+        title: Text('Dog Images'),
+    ),
+    body: _isLoading
+    ? Center(
+    child: CircularProgressIndicator(),
+    )
+        : ListView.builder(
+    itemCount: _dogImageUrls.length,
+    itemBuilder: (context, index) {
+    return Padding(
+    padding: EdgeInsets.all(8.0),
+    child: Container(
+    width: double.infinity,
+    height: 200,
+    child: Image.network(
+    _dogImageUrls[index],
+    fit: BoxFit.cover,
+    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+    if (loadingProgress == null) {
+    return child;
+    } else {
+    return Center(child: CircularProgressIndicator());
+    }
+    },
+    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+    return Icon(Icons.error);
+    },
+    ),
+    ),
+    );
+    },
+    ),
