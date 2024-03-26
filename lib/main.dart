@@ -88,3 +88,11 @@ class _DogImagesPageState extends State<DogImagesPage> {
     );
     },
     ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _fetchDogImages,
+        tooltip: 'Refresh',
+        child: Icon(Icons.refresh),
+      ),
+    );
+  }
+}
