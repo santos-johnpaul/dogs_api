@@ -33,3 +33,21 @@ class _DogImagesPageState extends State<DogImagesPage> {
     super.initState();
     _fetchDogImages();
   }
+  Future<void> _fetchDogImages() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/image/random'));
+    if (response.statusCode == 200) {
+      final String data = json.decode(response.body)['message'];
+      setState(() {
+        _dogImageUrls.add(data);
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      throw Exception('Failed to load dog images');
+    }
+  }
